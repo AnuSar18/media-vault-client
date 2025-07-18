@@ -9,7 +9,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      await axios.post('http://localhost:5000/api/auth/login', { username, password }, { withCredentials: true });
+      await axios.post('https://media-vault-client.vercel.app/api/auth/login', { username, password }, { withCredentials: true });
       navigate('/dashboard');
     } catch {
       alert('Login failed');

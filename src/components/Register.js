@@ -8,7 +8,7 @@ const Register = () => {
 
   const handleRegister = async () => {
     try {
-      await axios.post('http://localhost:5000/api/auth/register', { username, password });
+      await axios.post('https://media-vault-client.vercel.app/api/auth/register', { username, password });
       alert('Registered! Now login.');
     } catch {
       alert('Registration failed');

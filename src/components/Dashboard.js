@@ -9,19 +9,19 @@ const Dashboard = () => {
   const [folderName, setFolderName] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/media/folders', { withCredentials: true })
+    axios.get('https://media-vault-client.vercel.app/api/media/folders', { withCredentials: true })
       .then(res => setFolders(res.data))
       .catch(() => window.location.href = '/');
   }, []);
 
   const createFolder = async () => {
-    const res = await axios.post('http://localhost:5000/api/media/folder', { name: folderName }, { withCredentials: true });
+    const res = await axios.post('https://media-vault-client.vercel.app/api/media/folder', { name: folderName }, { withCredentials: true });
     setFolders([...folders, res.data]);
     setFolderName('');
   };
 
   const deleteFolder = async (id) => {
-    await axios.delete(`http://localhost:5000/api/media/folder/${id}`, { withCredentials: true });
+    await axios.delete(`https://media-vault-client.vercel.app/api/media/folder/${id}`, { withCredentials: true });
     setFolders(folders.filter(f => f._id !== id));
     setSelectedFolder(null);
     setFiles([]);
@@ -29,7 +29,7 @@ const Dashboard = () => {
 
   const fetchFiles = async (folderId) => {
     setSelectedFolder(folderId);
-    const res = await axios.get(`http://localhost:5000/api/media/files/${folderId}`, { withCredentials: true });
+    const res = await axios.get(`https://media-vault-client.vercel.app/api/media/files/${folderId}`, { withCredentials: true });
     setFiles(res.data);
   };
 
@@ -39,7 +39,7 @@ const Dashboard = () => {
     formData.append('folderId', selectedFolder);
     formData.append('folderName', folders.find(f => f._id === selectedFolder)?.name);
 
-    const res = await axios.post('http://localhost:5000/api/media/upload', formData, {
+    const res = await axios.post('https://media-vault-client.vercel.app/api/media/upload', formData, {
       withCredentials: true,
       headers: { 'Content-Type': 'multipart/form-data' }
     });
@@ -47,18 +47,18 @@ const Dashboard = () => {
   };
 
   const deleteFile = async (id) => {
-    await axios.delete(`http://localhost:5000/api/media/file/${id}`, { withCredentials: true });
+    await axios.delete(`https://media-vault-client.vercel.app/api/media/file/${id}`, { withCredentials: true });
     setFiles(files.filter(f => f._id !== id));
   };
 
   const renameFile = async (id) => {
     const newName = prompt('Enter new name:');
-    const res = await axios.put(`http://localhost:5000/api/media/file/${id}`, { newName }, { withCredentials: true });
+    const res = await axios.put(`https://media-vault-client.vercel.app/api/media/file/${id}`, { newName }, { withCredentials: true });
     setFiles(files.map(f => f._id === id ? res.data : f));
   };
 
   const logout = async () => {
-    await axios.get('http://localhost:5000/api/auth/logout', { withCredentials: true });
+    await axios.get('https://media-vault-client.vercel.app/api/auth/logout', { withCredentials: true });
     window.location.href = '/';
   };
 
